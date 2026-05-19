@@ -1,9 +1,11 @@
+import os
 import requests
+
 from django.shortcuts import render
 from django.http import HttpResponse
 
 
-RESEND_API_KEY = "YOUR_RESEND_API_KEY"
+RESEND_API_KEY = os.getenv("RESEND_API_KEY")
 
 
 def home(request):
@@ -11,25 +13,35 @@ def home(request):
 
 
 def send_email(request):
-    url = "https://api.resend.com/emails"
 
-    payload = {
-        "from": "onboarding@resend.dev",
-        "to": ["your_email@example.com"],
-        "subject": "Hello from Django",
-        "html": "<h1>Hello World Email from Django + Render</h1>"
-    }
+    if request.method == "POST":
 
-    headers = {
-        "Authorization": f"Bearer {RESEND_API_KEY}",
-        "Content-Type": "application/json"
-    }
+        receiver_email = request.POST.get("email")
 
-    response = requests.post(url, json=payload, headers=headers)
+        url = "https://api.resend.com/emails"
 
-    if response.status_code == 200:
-        return HttpResponse("Email Sent Successfully!")
-    else:
-        return HttpResponse(
-            f"Failed: {response.text}"
+        payload = {
+            "from": "onboarding@resend.dev",
+            "to": [receiver_email],
+            "subject": "Hello from StarkExp",
+            "html": """
+                <h1>Hello World</h1>
+                <p>Email sent successfully from Django + Render</p>
+            """,
+            "reply_to": "starkexp2001@gmail.com"
+        }
+
+        headers = {
+            "Authorization": f"Bearer {RESEND_API_KEY}",
+            "Content-Type": "application/json"
+        }
+
+        response = requests.post(
+            url,
+            json=payload,
+            headers=headers
         )
+
+        return HttpResponse(response.text)
+
+    return HttpResponse("Invalid Request")

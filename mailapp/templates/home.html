@@ -5,12 +5,20 @@
 </head>
 <body>
 
-    <h1>Django Email Sender</h1>
+    <h1>Send Email</h1>
 
     <form action="/send-email/" method="post">
         {% csrf_token %}
+
+        <input
+            type="email"
+            name="email"
+            placeholder="Enter recipient email"
+            required
+        >
+
         <button type="submit">
-            Send Hello World Email
+            Send Email
         </button>
     </form>
 

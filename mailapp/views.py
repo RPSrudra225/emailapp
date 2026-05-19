@@ -1,9 +1,8 @@
 import os
 import requests
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
-
 
 RESEND_API_KEY = os.getenv("RESEND_API_KEY")
 
@@ -42,6 +41,6 @@ def send_email(request):
             headers=headers
         )
 
-        return HttpResponse(response.text)
+        return HttpResponse("Email Sent Successfully!")
 
-    return HttpResponse("Invalid Request")
+    return redirect('/')

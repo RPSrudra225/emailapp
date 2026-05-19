@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Email Sender</title>
+</head>
+<body>
+
+    <h1>Django Email Sender</h1>
+
+    <form action="/send-email/" method="post">
+        {% csrf_token %}
+        <button type="submit">
+            Send Hello World Email
+        </button>
+    </form>
+
+</body>
+</html>

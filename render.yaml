@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: django-email-app
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn emailproject.wsgi"

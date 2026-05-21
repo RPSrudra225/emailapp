@@ -41,6 +41,6 @@ def send_email(request):
             headers=headers
         )
 
-        return HttpResponse(response.text)
+        return HttpResponse("Email Sent Successfully!")
 
     return redirect('/')
